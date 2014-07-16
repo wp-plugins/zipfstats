@@ -1,0 +1,23 @@
+.jqplot-yaxis-label {
+/* the margin is good for opera, bad for firefox & it seems chrome */
+    margin-right: 20px; 
+    font-size: 11pt;
+    position: absolute;
+}
+    div.jqplot-table-legend-swatch {
+    width: 0px;
+    height: 0px;
+    border-width: 3px 4px;
+    }
+    td.jqplot-table-legend > div {
+        padding: 1px;
+    }
+
+#jbl_wordtable {
+	margin-top: 70px;
+	border: 0px;
+}
+
+#jbl_wordcell {
+	border: 0px;
+}
