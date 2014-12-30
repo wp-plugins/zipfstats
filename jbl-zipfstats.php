@@ -1,14 +1,13 @@
 <?php
 /**
  * @package Zipfstats
- * @version 1.0
  */
 /*
 Plugin Name: Zipfstats 
 Plugin URI: http://sp.uconn.edu/~jbl00001/zipfstats.zip
 Description: A widget to calculate and display Zipf statistics per post/page
 Author: James Luberda
-Version: 1.0
+Version: 1.1
 Author URI: http://sp.uconn.edu/~jbl00001
 License: GPLv2 or later
 */
@@ -78,11 +77,7 @@ class zipfstats_widget extends WP_Widget {
 	function form( $instance ) {
 		$jbl_defaults = array ( 'jbl_zipf_adminonly' => 'on', 'jbl_zipf_shortcodes' => 'on', 'jbl_zipf_show_wordlist' => 'on', 'jbl_zipf_expand_wordlist' => 'on', 'jbl_zipf_numwords' => '10' );
 		$instance = wp_parse_args( (array) $instance, $jbl_defaults );
-		$jbl_zipf_adminonly = $instance[ 'jbl_zipf_adminonly' ];
-		$jbl_zipf_shortcodes = $instance[ 'jbl_zipf_shortcodes' ];
-		$jbl_zipf_show_wordlist = $instance[ 'jbl_zipf_show_wordlist' ];
-		$jbl_zipf_expand_wordlist = $instance[ 'jbl_zipf_expand_wordlist' ];
-		$jbl_zipf_numwords = $instance[ 'jbl_zipf_numwords' ];
+		extract( $instance );
 		?>
 			<p>Show Only to Admin Users: <input name="<?php
 			echo $this->get_field_name( 'jbl_zipf_adminonly' );
@@ -111,12 +106,11 @@ class zipfstats_widget extends WP_Widget {
 	}
 
 	function update( $new_instance, $old_instance ) {
+		$jbl_zipf_options = array( 'jbl_zipf_adminonly', 'jbl_zipf_shortcodes', 'jbl_zipf_show_wordlist', 'jbl_zipf_expand_wordlist', 'jbl_zipf_numwords' );
 		$instance = $old_instance;
-		$instance[ 'jbl_zipf_adminonly' ] = $new_instance[ 'jbl_zipf_adminonly' ];
-		$instance[ 'jbl_zipf_shortcodes' ] = $new_instance[ 'jbl_zipf_shortcodes' ];
-		$instance[ 'jbl_zipf_show_wordlist' ] = $new_instance[ 'jbl_zipf_show_wordlist' ] ;
-		$instance[ 'jbl_zipf_expand_wordlist' ] = $new_instance[ 'jbl_zipf_expand_wordlist' ] ;
-		$instance[ 'jbl_zipf_numwords' ] = $new_instance[ 'jbl_zipf_numwords' ];
+		foreach ($jbl_zipf_options as $a) {
+			$instance[ $a ] = $new_instance [ $a ];
+		}
 		
 		return $instance;
 	}

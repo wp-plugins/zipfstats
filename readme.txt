@@ -2,8 +2,8 @@
 Contributors: James Luberda
 Tags: analysis, posts, pages, statistics, word count, writing, linguistics, zipf. widget
 Requires at least: 3.8.1
-Tested up to: 3.9.1
-Stable tag: trunk
+Tested up to: 4.1
+Stable tag: 1.1 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,10 @@ To find out how Zipfian your posts/pages are, and perhaps demonstrate that their
 
 = Will it work with insert_theme_name_here? =
 
-Zipfstats only takes into account post/page content.
+In terms of calculations, Zipfstats only takes into account post/page content.
+Aspects of the widget display can be affected depending on theme
+configuration. Most Zipfstats work was performed against the Twenty Fourteen
+theme, as a point of reference.
 
 = Will it work with insert_plugin_name_here? =
 
@@ -71,6 +74,9 @@ It is traditional to plot the log of rank and frequency rather than the raw numb
 5. Finally, with a hand-crafted page designed to approximate a Zipfian distribution, we can see that the plot of actual words by frequency mostly fits the Zipfian distribution plot line (language has been abused to achieve this in a small corpus).
 
 == Changelog ==
+
+= 1.1 =
+* Tested up to WP 4.1.
 
 = 1.0 =
 * Initial release.
