@@ -2,8 +2,8 @@
 Contributors: James Luberda
 Tags: analysis, posts, pages, statistics, word count, writing, linguistics, zipf. widget
 Requires at least: 3.8.1
-Tested up to: 4.1
-Stable tag: 1.1 
+Tested up to: 4.2
+Stable tag: 1.2 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,8 +23,9 @@ Options
 
 * Show Only to Admin Users (default = on): only admin-level users see Zipfstats output. If unchecked, all users, logged or non-logged, will see it.
 * Strip Shortcode Content from Analysis (default = on): skips processing of and removes all shortcodes from the content of the post or page prior to analysis. Actual content remains unaffected.
-* Include Wordlist (default = on): in addition to the Zipf plot, this option includes a table of the top n words in rank order as well as the frequency of their occurrences in raw terms. A clickable header allows the user to toggle between showing/hiding the wordlist.
-* Expand Wordlist Table by Default (default = on): if expand is selected, the wordlist (if also selected) will be displayed on initial page load. Unchecked, the user will have to toggle its display manually via a clickable header.  
+* Include Graph (default = on): Display a log-log plot of word frequency data against a perfect Zipf distribution
+* Include Word Frequencies (default = on): in addition to the Zipf plot, this option includes a table of the top n words in rank order as well as the frequency of their occurrences in raw terms. A clickable header allows the user to toggle between showing/hiding the wordlist.
+* Expand Word Frequency Table by Default (default = on): if expand is selected, the wordlist (if also selected) will be displayed on initial page load. Unchecked, the user will have to toggle its display manually via a clickable header.  
 * Number of Words to Show (default = 10, max 25): this determines the number of words to appear in the "top n" wordlist table, if the latter is enabled. This option does not affect any calculations.
 
 Some things to note:
@@ -36,7 +37,7 @@ Some things to note:
 
 * Add site-wide/category-wide/author-wide analyses
 * Add to admin post/page edit
-* Add recommendations to approximate a Zipfian fit
+* Add recommendations to better approximate a Zipfian distribution 
 
 == Installation ==
 
@@ -74,6 +75,9 @@ It is traditional to plot the log of rank and frequency rather than the raw numb
 5. Finally, with a hand-crafted page designed to approximate a Zipfian distribution, we can see that the plot of actual words by frequency mostly fits the Zipfian distribution plot line (language has been abused to achieve this in a small corpus).
 
 == Changelog ==
+
+= 1.2 =
+* Tested up to WP 4.2. Updated to use PHP5 constructor to avoid deprecation warnings with WP 4.3. Made graph display optional per user request (arno756).
 
 = 1.1 =
 * Tested up to WP 4.1.
