@@ -7,7 +7,7 @@ Plugin Name: Zipfstats
 Plugin URI: http://sp.uconn.edu/~jbl00001/zipfstats.zip
 Description: A widget to calculate and display Zipf statistics per post/page
 Author: James Luberda
-Version: 1.1
+Version: 1.2
 Author URI: http://sp.uconn.edu/~jbl00001
 License: GPLv2 or later
 */
@@ -61,7 +61,7 @@ class zipfstats_widget extends WP_Widget {
 
         function zipfstats_widget() {
                 $widget_ops = array( 'classname' => 'zipfstats_widget_class', 'description' => 'Display Zipf Calculations' );
-                $this->WP_Widget('zipfstats_widget', 'Zipfstats Widget', $widget_ops);
+                parent::__construct( 'zipfstats_widget', 'Zipfstats Widget', $widget_ops );
         }
 
         function widget( $args, $instance ) {
@@ -75,7 +75,7 @@ class zipfstats_widget extends WP_Widget {
         }
 
 	function form( $instance ) {
-		$jbl_defaults = array ( 'jbl_zipf_adminonly' => 'on', 'jbl_zipf_shortcodes' => 'on', 'jbl_zipf_show_wordlist' => 'on', 'jbl_zipf_expand_wordlist' => 'on', 'jbl_zipf_numwords' => '10' );
+		$jbl_defaults = array ( 'jbl_zipf_adminonly' => 'on', 'jbl_zipf_shortcodes' => 'on', 'jbl_zipf_show_graph' => 'on', 'jbl_zipf_show_wordlist' => 'on', 'jbl_zipf_expand_wordlist' => 'on', 'jbl_zipf_numwords' => '10' );
 		$instance = wp_parse_args( (array) $instance, $jbl_defaults );
 		extract( $instance );
 		?>
@@ -85,10 +85,13 @@ class zipfstats_widget extends WP_Widget {
 			?> /></p><p>Strip Shortcode Content from Analysis: <input name="<?php
                         echo $this->get_field_name( 'jbl_zipf_shortcodes' );
                         ?>" type='checkbox' <?php checked( $jbl_zipf_shortcodes, 'on' );
-                        ?> /></p><p>Include Wordlist: <input name="<?php
+                        ?> /></p><p>Include Graph: <input name="<?php
+                        echo $this->get_field_name( 'jbl_zipf_show_graph' ); 
+                        ?>" type='checkbox' <?php checked( $jbl_zipf_show_graph, 'on' );
+                        ?> /></p><p>Include Word Frequencies: <input name="<?php
                         echo $this->get_field_name( 'jbl_zipf_show_wordlist' ); 
                         ?>" type='checkbox' <?php checked( $jbl_zipf_show_wordlist, 'on' );
-                        ?> /></p><p>Expand Wordlist Table by Default: <input name="<?php
+                        ?> /></p><p>Expand Word Frequency Table by Default: <input name="<?php
                         echo $this->get_field_name( 'jbl_zipf_expand_wordlist' ); 
                         ?>" type='checkbox' <?php checked( $jbl_zipf_expand_wordlist, 'on' );
                         
@@ -106,7 +109,7 @@ class zipfstats_widget extends WP_Widget {
 	}
 
 	function update( $new_instance, $old_instance ) {
-		$jbl_zipf_options = array( 'jbl_zipf_adminonly', 'jbl_zipf_shortcodes', 'jbl_zipf_show_wordlist', 'jbl_zipf_expand_wordlist', 'jbl_zipf_numwords' );
+		$jbl_zipf_options = array( 'jbl_zipf_adminonly', 'jbl_zipf_shortcodes', 'jbl_zipf_show_graph', 'jbl_zipf_show_wordlist', 'jbl_zipf_expand_wordlist', 'jbl_zipf_numwords' );
 		$instance = $old_instance;
 		foreach ($jbl_zipf_options as $a) {
 			$instance[ $a ] = $new_instance [ $a ];
@@ -165,7 +168,9 @@ function show_zipfstats( $instance ) {
 	print '<link rel="stylesheet" type="text/css" href="' . $jqpath . 'jquery.jqplot.min.css" />';
 	print '<link rel="stylesheet" type="text/css" href="'. $jbl_csspath . 'jbl_zipfplot.css" />';
 
-?> 
+	//and now output graph if selected
+	if ( $instance[ 'jbl_zipf_show_graph' ] ) {
+?>
 
 <div id="chartdiv" style="height:200px; width:200px;"></div>
 <script language="javascript">
@@ -197,11 +202,12 @@ plot.replot();
 </script>
 
 <?php
+	}
 	//show wordlist toggle if checked, display table on load if expand is also checked
 	if ( $instance[ 'jbl_zipf_show_wordlist' ] ) {
 ?>
 
-<div id="jbl_showwordtable" style="margin-top: 55px;">Show/Hide Word List</div>
+<div id="jbl_showwordtable" style="margin-top: 55px;">Show/Hide Word Frequencies</div>
 
 
 <table id="jbl_wordtable" style="display: <?php echo ( $instance[ 'jbl_zipf_expand_wordlist' ] == 'on' ) ? '' : 'none' ?>; margin-top: 5px;">
